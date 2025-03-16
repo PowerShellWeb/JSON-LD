@@ -1,5 +1,5 @@
 
-name: oEmbed Module Build
+name: JSON-LD Module Build
 on: 
   push: 
   pull_request: 
