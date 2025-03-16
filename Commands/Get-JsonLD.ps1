@@ -7,8 +7,10 @@ function Get-JsonLD {
         
         This is a format used by many websites to provide structured data about their content.
     .EXAMPLE
+        # Want to get information about a movie?  Linked Data to the rescue!
         Get-JsonLD -Url https://www.imdb.com/title/tt0211915/
     #>
+    [Alias('jsonLD','json-ld')]
     param(
     # The URL that may contain JSON-LD data
     [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
