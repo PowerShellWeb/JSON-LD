@@ -9,6 +9,9 @@ function Get-JsonLD {
     .EXAMPLE
         # Want to get information about a movie?  Linked Data to the rescue!
         Get-JsonLD -Url https://www.imdb.com/title/tt0211915/
+    .EXAMPLE
+        # Want information about an article?  Lots of news sites use this format.
+        Get-JsonLD https://www.thebulwark.com/p/mahmoud-khalil-immigration-detention-first-amendment-free-speech-rights    
     #>
     [Alias('jsonLD','json-ld')]
     param(
@@ -41,13 +44,20 @@ application/ld\+json                          # The type that indicates linked d
                 $match.Groups['JsonContent'].Value | 
                     ConvertFrom-Json
             ) {
-                if ($jsonObject.'@context' -and $jsonObject.'@type') {
+                if ($jsonObject.'@type') {
                     $schemaType = $jsonObject.'@context',$jsonObject.'@type' -join '/'
-                    $jsonObject.pstypenames.insert(0, $schemaType)                    
+                    $jsonObject.pstypenames.insert(0, $schemaType)
+                }
+
+                if ($jsonObject.'@graph') {
+                    foreach ($graphObject in $jsonObject.'@graph') {
+                        if ($graphObject.'@type') {                            
+                            $graphObject.pstypenames.insert(0, $graphObject.'@type')
+                        }
+                    }                
                 }
                 $jsonObject
             }
-        }
-        
+        }        
     }
 }
