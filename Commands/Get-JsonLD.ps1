@@ -45,18 +45,20 @@ application/ld\+json                          # The type that indicates linked d
                     ConvertFrom-Json
             ) {
                 if ($jsonObject.'@type') {
-                    $schemaType = $jsonObject.'@context',$jsonObject.'@type' -join '/'
+                    $schemaType = $jsonObject.'@context',$jsonObject.'@type' -ne '' -join '/'
                     $jsonObject.pstypenames.insert(0, $schemaType)
-                }
-
-                if ($jsonObject.'@graph') {
+                    $jsonObject
+                } elseif ($jsonObject.'@graph') {
                     foreach ($graphObject in $jsonObject.'@graph') {
-                        if ($graphObject.'@type') {                            
+                        if ($graphObject.'@type') {
                             $graphObject.pstypenames.insert(0, $graphObject.'@type')
                         }
-                    }                
+                        $graphObject
+                    }                    
+                } else {
+                    $jsonObject
                 }
-                $jsonObject
+                
             }
         }        
     }
