@@ -12,6 +12,10 @@ function Get-JsonLD {
     .EXAMPLE
         # Want information about an article?  Lots of news sites use this format.
         Get-JsonLD https://www.thebulwark.com/p/mahmoud-khalil-immigration-detention-first-amendment-free-speech-rights    
+    .EXAMPLE
+        # Want to get information about a schema?
+        jsonld https://schema.org/Movie
+        # Get-JSONLD will output the contents of a `@Graph` object if no `@type` is found.        
     #>
     [Alias('jsonLD','json-ld')]
     param(

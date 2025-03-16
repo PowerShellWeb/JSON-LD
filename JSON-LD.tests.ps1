@@ -7,8 +7,9 @@ describe 'JSON-LD' {
             
         }
         it 'can get information a schema' {
-            $result = Get-JsonLD -Url 'https://schema.org/Movie'
-            $result.'@graph' | Should -Not -BeNullOrEmpty
+            Get-JsonLD https://schema.org/Movie | 
+                Select-Object -ExpandProperty pstypenames -Unique | 
+                Should -Contain 'rdf:Property'            
         }         
     }
 }
